@@ -49,8 +49,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    try {
+      api.post('/auth/logout').catch(() => {});
+    } catch (e) {
+      // ignore logout errors
+    }
+    // Clear all local storage to remove any lingering keys
+    localStorage.clear();
     delete api.defaults.headers.common['Authorization'];
     setUser(null);
     navigate('/login');

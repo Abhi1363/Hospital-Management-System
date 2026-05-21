@@ -18,8 +18,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      // Clear all local storage and redirect to login on unauthorized
+      localStorage.clear();
       window.location.href = '/login';
     }
     return Promise.reject(error);
